@@ -1,0 +1,129 @@
+
+//breakpoints
+$xl: 1500px;
+$lg: 1100px;
+$md: 700px;
+$sm: 350px;
+
+
+@mixin media($breakpoint){
+  @media screen and (max-width: $breakpoint){
+    @content;
+  }
+}
+
+
+@mixin media-tablet(){
+  @media screen and (min-width: calc($md + 1px)) and (max-width: $lg){
+    @content;
+  }
+}
+
+
+@mixin container($left: true, $right: true){
+
+  @if $right {
+    padding-right: calc(50% - 650px);
+
+    @include media($xl){
+      padding-right: 8%;      
+    }  
+    @include media($lg){
+      padding-right: 6%;      
+    }
+    @include media($md){
+      padding-right: 3%;      
+    }
+    @include media($sm){
+      padding-right: 2px;      
+    }
+  }
+
+
+  @if $left {
+    padding-left: calc(50% - 650px);
+
+    @include media($xl){     
+      padding-left: 8%;
+    }  
+    @include media($lg){      
+      padding-left: 6%;
+    }
+    @include media($md){      
+      padding-left: 3%;
+    }
+    @include media($sm){      
+      padding-left: 2px;
+    }
+  }
+}
+
+
+@mixin color($background-color, $text-color){
+  background-color: $background-color;
+  color: $text-color;
+}
+
+
+@mixin size($width, $height){
+  width: $width;
+  height: $height;
+}
+
+
+@mixin flex($direction : row, $justify: center, $align-items: center){
+  display: flex; 
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align-items;  
+}
+
+
+@mixin row($columns, $gap, $breakpoint: false){
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr)
+  $gap = $gap
+}
+
+
+@mixin horizontal-gap($size){  
+  &:not(:first-child){
+    margin-left: $size;
+  }  
+}
+
+
+@mixin btn {  
+  cursor: pointer;
+  padding: 8px 16px; 
+  border: none;
+  border-radius: 5px;  
+}
+
+
+@mixin link {
+  @include btn;
+  text-decoration: none;
+}
+
+
+@mixin border-box{
+  box-sizing: border-box;
+
+  *, *:after, *:before{
+    box-sizing: border-box;
+  }
+}
+
+
+@mixin link-no-decoration{  
+  text-decoration: none;
+  color: inherit;
+}
+
+
+@mixin ul-no-decoration{
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
