@@ -3,7 +3,8 @@ import re
 from PIL import Image
 
 
-def convert_directory(src, dest, width):
+
+def convert_directory(src, dest, width= 1920):
 
     for file in  os.listdir(src):
         
@@ -25,7 +26,7 @@ def convert_directory(src, dest, width):
 #end convert_directory()
 
 
-def convert():
+def convert_all():
 
     directories = [path[0] for path in os.walk('./src/images')]
 
@@ -33,16 +34,12 @@ def convert():
         dest = re.sub(r'^./src', './assets', src)    
     
         if not os.path.isdir(dest):
-            os.mkdir(dest)    
-        
-        match = re.search(r'[\\/][0-9]*([\\/]|$)', src)
+            os.mkdir(dest)
 
-        if match:
-            width = re.sub(r'[\\/]', '', match.group(0))                       
-            convert_directory(src, dest, int(width))  
+        convert_directory(src, dest)  
 
 #end convert 
 
 
 if __name__ == '__main__':
-    convert()
+    convert_all()

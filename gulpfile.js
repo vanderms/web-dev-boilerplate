@@ -1,3 +1,6 @@
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
 // gulp
 const { src, dest, watch, series, parallel } = require('gulp');
 
@@ -18,8 +21,8 @@ const tsify = require('tsify');
 
 
 const path = { 
-  scss: 'src/scss/**/*.scss',
-  ts: 'src/ts/**/*.ts',
+  scss: 'src/**/*.scss',
+  ts: 'src/**/*.ts',
   images: 'src/images/**/*.{png,jpeg,jpg}'
 };
 
@@ -27,8 +30,12 @@ const path = {
 // tasks
 function scssTask(){  
   return (
-    src([path.scss])     
+    src('src/scss/index.scss')     
       .pipe(sass())
+      .on('error', function (err) {
+        console.log(err.toString());       
+        this.emit('end');
+      })
       .pipe(postcss([autoprefixer(), cssnano({zindex: false})]))
       .pipe(concat('styles.css'))
       .pipe(dest('./'))
@@ -46,6 +53,10 @@ function tsTask(){
   })
     .plugin(tsify)
     .bundle()
+    .on('error', function (err) {
+      console.log(err.toString());     
+      this.emit('end');
+    })
     .pipe(source("bundle.js"))
     .pipe(dest("."));
 }
@@ -71,7 +82,7 @@ function watchTsPath(){
   watch([path.ts], tsTask);
 }
 
-exports.default = series(
+export default series(
   parallel(scssTask, tsTask, imageTask),
-  parallel(watchImagePath, watchScssPath)
+  parallel(watchImagePath, watchTsPath, watchScssPath)
 );

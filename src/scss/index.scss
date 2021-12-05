@@ -1,0 +1,18 @@
+
+//imports
+@import './mixins.scss';
+@import '../components/navbar/navbar.scss';
+
+
+
+//commom styles
+*, *:after, *:before {
+  box-sizing: border-box;  
+}
+
+body {
+  margin: 0px;  
+  padding: 0px;
+}
+
+

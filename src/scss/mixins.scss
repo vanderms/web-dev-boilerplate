@@ -1,7 +1,7 @@
 
 //breakpoints
 $xl: 1500px;
-$lg: 1100px;
+$lg: 1140px;
 $md: 700px;
 $sm: 350px;
 
@@ -20,41 +20,30 @@ $sm: 350px;
 }
 
 
-@mixin container($left: true, $right: true){
+$container: calc(50% - 650px);
+$container-xl: calc(50% - 550px);
+$container-lg: 6%;
+$container-md: 2%;
 
-  @if $right {
-    padding-right: calc(50% - 650px);
 
-    @include media($xl){
-      padding-right: 8%;      
-    }  
-    @include media($lg){
-      padding-right: 6%;      
-    }
-    @include media($md){
-      padding-right: 3%;      
-    }
-    @include media($sm){
-      padding-right: 2px;      
-    }
+@mixin container(){
+  
+  padding-right: $container;
+  padding-left: $container;
+
+  @include media($xl){
+    padding-right: $container-xl;
+    padding-left: $container-xl;     
+  }  
+
+  @include media($lg){
+    padding-right: $container-lg;
+    padding-left: $container-lg; 
   }
 
-
-  @if $left {
-    padding-left: calc(50% - 650px);
-
-    @include media($xl){     
-      padding-left: 8%;
-    }  
-    @include media($lg){      
-      padding-left: 6%;
-    }
-    @include media($md){      
-      padding-left: 3%;
-    }
-    @include media($sm){      
-      padding-left: 2px;
-    }
+  @include media($md){
+    padding-right: $container-md;
+    padding-left: $container-md;      
   }
 }
 
@@ -79,20 +68,6 @@ $sm: 350px;
 }
 
 
-@mixin row($columns, $gap, $breakpoint: false){
-  display: grid;
-  grid-template-columns: repeat($columns, 1fr)
-  $gap = $gap
-}
-
-
-@mixin horizontal-gap($size){  
-  &:not(:first-child){
-    margin-left: $size;
-  }  
-}
-
-
 @mixin btn {  
   cursor: pointer;
   padding: 8px 16px; 
@@ -107,7 +82,7 @@ $sm: 350px;
 }
 
 
-@mixin border-box{
+@mixin border-box {
   box-sizing: border-box;
 
   *, *:after, *:before{
