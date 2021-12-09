@@ -19,6 +19,12 @@ $sm: 350px;
   }
 }
 
+@mixin hide-on($breakpoint){
+  @include media($breakpoint){
+    display: none !important;
+  }
+}
+
 
 $container: calc(50% - 650px);
 $container-xl: calc(50% - 550px);

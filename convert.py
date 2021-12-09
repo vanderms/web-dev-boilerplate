@@ -4,7 +4,7 @@ from PIL import Image
 
 
 
-def convert_directory(src, dest, width= 1920):
+def convert_directory(src, dest):
 
     for file in  os.listdir(src):
         
@@ -12,10 +12,11 @@ def convert_directory(src, dest, width= 1920):
             continue
 
         image = Image.open(src + "/" + file)
-        
-        if image.size[0] > width:            
-            height = round((width * image.size[1]) / image.size[0])
-            image = image.resize((width, height), Image.ANTIALIAS)
+        max_width = 1920
+
+        if image.size[0] > max_width:            
+            height = round((max_width * image.size[1]) / image.size[0])
+            image = image.resize((max_width, height), Image.ANTIALIAS)
         
         name = file.replace(".png", ".jpg")
         if file != name:

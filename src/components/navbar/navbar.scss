@@ -6,19 +6,11 @@ $navbar-desktop-height: var(--navbar-desktop-height, 80px);
 $navbar-mobile-height: var(--navbar-mobile-height, 56px);
 $navbar-color: var(--navbar-color, white);
 $navbar-link-active-color: var(--navbar-link-active-color, #00bb94);
+$navbar-link-hover-color: var(--navbar-link-hover-color, black);
+$navbar-link-hover-weight: var(--navbar-link-hover-weight, 400);
 $navbar-bg-color: var(--navbar-bg-color, black);
 $navbar-btn-color: var(--navbar-btn-color, white);
 
-
-body::before {
-  content: "";
-  display: block;
-  width: 100%;
-  height: var(--navbar-desktop-height);
-  @include media($lg){
-    height: var(--navbar-mobile-height);
-  }
-}
 
 // MIXINS
 @mixin btn {  
@@ -43,6 +35,10 @@ body::before {
     &.active{
       color: $navbar-link-active-color;
     }
+    &:hover{
+      font-weight: $navbar-link-hover-weight;
+      color: $navbar-link-hover-color;
+    }
   }
 }
 
@@ -52,7 +48,7 @@ body::before {
   @include flex(row, space-between, center);
   @include size(100%, $navbar-desktop-height);
   @include navegation-link();
-  position: fixed; 
+  position: sticky; 
   top: 0px;  
   color: $navbar-color;
   background-color: $navbar-bg-color;
@@ -69,7 +65,7 @@ body::before {
       @include btn;
       .hamburguer {
         @include flex(column, space-between, center);
-        @include size(20px, 14px);
+        @include size(22px, 14px);
         span {
           border-top: 2px solid $navbar-btn-color;
           width: 100%;
@@ -102,6 +98,7 @@ body::before {
     left: 0px;
     top: 0px;
     z-index: 102;
+    color: $navbar-color;
     position: fixed;
     background-color: $navbar-bg-color;
 
@@ -114,7 +111,16 @@ body::before {
       display: grid;
       grid-auto-flow: row;
       align-items: center;
-      gap: 20px;   
+      gap: 20px;  
+      width: 100%;
+      padding: 0px 40px;
+      li{
+        display: inline-block;
+        width: 100%;       
+      }
+      a{
+        width: 100%;        
+      }
     }
   }
 
