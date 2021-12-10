@@ -1,6 +1,3 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-
 // gulp
 const { src, dest, watch, series, parallel } = require('gulp');
 
@@ -14,15 +11,11 @@ const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 
-// typescript dependencies
-const browserify = require('browserify');
-const source = require('vinyl-source-stream');
-const tsify = require('tsify');
 
 
 const path = { 
   scss: 'src/**/*.scss',
-  ts: 'src/**/*.ts',
+  js: 'src/**/*.js',
   images: 'src/images/**/*.{png,jpeg,jpg}'
 };
 
@@ -43,25 +36,6 @@ function scssTask(){
 }
 
 
-function tsTask(){
-  return browserify({
-    basedir: ".",
-    debug: true,
-    entries: ["src/ts/main.ts"],
-    cache: {},
-    packageCache: {},
-  })
-    .plugin(tsify)
-    .bundle()
-    .on('error', function (err) {
-      console.log(err.toString());     
-      this.emit('end');
-    })
-    .pipe(source("bundle.js"))
-    .pipe(dest("."));
-}
-
-
 async function imageTask(){  
   cmd.run('python convert.py', function(err, data, stderr){
     console.log(data)
@@ -78,11 +52,7 @@ function watchImagePath(){
   watch([path.images], imageTask);
 }
 
-function watchTsPath(){
-  watch([path.ts], tsTask);
-}
-
-export default series(
-  parallel(scssTask, tsTask, imageTask),
-  parallel(watchImagePath, watchTsPath, watchScssPath)
+exports.default = series(
+  parallel(scssTask, imageTask),
+  parallel(watchImagePath, watchScssPath)
 );
